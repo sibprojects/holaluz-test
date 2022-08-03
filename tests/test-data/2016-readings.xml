@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<readings>
+	<reading clientID="583ef6329df6b" period="2016-01">37232</reading>
+	<reading clientID="583ef6329df6b" period="2016-02">36537</reading>
+	<reading clientID="583ef6329df6b" period="2016-03">36430</reading>
+	<reading clientID="583ef6329df6b" period="2016-04">36622</reading>
+	<reading clientID="583ef6329df6b" period="2016-05">37776</reading>
+	<reading clientID="583ef6329df6b" period="2016-06">35382</reading>
+	<reading clientID="583ef6329df6b" period="2016-07">37970</reading>
+	<reading clientID="583ef6329df6b" period="2016-08">38463</reading>
+	<reading clientID="583ef6329df6b" period="2016-09">35252</reading>
+	<reading clientID="583ef6329df6b" period="2016-10">35704</reading>
+	<reading clientID="583ef6329df6b" period="2016-11">38220</reading>
+	<reading clientID="583ef6329df6b" period="2016-12">36688</reading>
+</readings>
