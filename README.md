@@ -36,9 +36,11 @@ You can use any external library or language version :)
 ---
 ## To testing result:
 
+```
 docker-compose -f ./docker/docker-compose.yml build
 docker-compose -f ./docker/docker-compose.yml up -d --remove-orphans
 docker-compose -f ./docker/docker-compose.yml exec -u www-data php-fpm bash
 php bin/console app:read tests/data/2016-readings.csv
 php bin/console app:read tests/data/2016-readings.xml 
 php bin/phpunit
+```
