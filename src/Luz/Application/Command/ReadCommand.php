@@ -34,13 +34,16 @@ class ReadCommand extends Command
 
         $processor = new Processor($filename);
         $data = $processor->do();
-//            dd($data);
 
-        $table = new Table($output);
-        $table
-            ->setHeaders(['Client', 'Month', 'Suspicious', 'Median'])
-            ->setRows($data);
-        $table->render();
+        if(count($data)) {
+            $table = new Table($output);
+            $table
+                ->setHeaders(['Client', 'Month', 'Suspicious', 'Median'])
+                ->setRows($data);
+            $table->render();
+        } else {
+            $output->writeln('<info>All reading in file is correct!</info>');
+        }
 
         try {
 
