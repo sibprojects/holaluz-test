@@ -34,6 +34,7 @@ The solution can be written in any of our stack languages: PHP, Python or Java.
 You can use any external library or language version :)
 
 ---
+## To testing result:
 
 docker-compose -f ./docker/docker-compose.yml build
 docker-compose -f ./docker/docker-compose.yml up -d --remove-orphans
