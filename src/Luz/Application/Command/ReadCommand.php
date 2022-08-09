@@ -33,7 +33,13 @@ class ReadCommand extends Command
         }
 
         $processor = new Processor($filename);
-        $data = $processor->do();
+
+        try {
+            $data = $processor->do();
+        } catch (\Throwable $e) {
+            $output->writeln('<error>Error reading file! '.$e->getMessage().'</error>');
+            return Command::FAILURE;
+        }
 
         if(count($data)) {
             $table = new Table($output);
@@ -41,14 +47,11 @@ class ReadCommand extends Command
                 ->setHeaders(['Client', 'Month', 'Suspicious', 'Median'])
                 ->setRows($data);
             $table->render();
+        } elseif(is_null($data)) {
+            $output->writeln('<error>Incorrect format file!</error>');
+            return Command::FAILURE;
         } else {
             $output->writeln('<info>All reading in file is correct!</info>');
-        }
-
-        try {
-
-        } catch (\Throwable $e) {
-            $output->writeln('<error>Error reading file!</error>');
         }
 
         return Command::SUCCESS;
