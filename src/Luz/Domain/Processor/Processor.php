@@ -19,10 +19,11 @@ class Processor
     public function do()
     {
         $ext = pathinfo($this->filename)['extension'];
-        if ($ext == 'csv') {
-            $this->parse(new ReaderCsv($this->filename));
-        } elseif ($ext == 'xml'){
-            $this->parse(new ReaderXml($this->filename));
+
+        $className = 'App\Luz\Domain\Reader\Reader' . ucfirst($ext);
+
+        if(class_exists($className)){
+            $this->parse(new $className($this->filename));
         } else {
             throw new \Exception('Invalid format file: '.$ext);
         }
