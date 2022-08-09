@@ -23,6 +23,8 @@ class Processor
             $this->parse(new ReaderCsv($this->filename));
         } elseif ($ext == 'xml'){
             $this->parse(new ReaderXml($this->filename));
+        } else {
+
         }
 
         return $this->check();
