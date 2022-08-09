@@ -24,7 +24,7 @@ class Processor
         } elseif ($ext == 'xml'){
             $this->parse(new ReaderXml($this->filename));
         } else {
-
+            throw new \Exception('Invalid format file: '.$ext);
         }
 
         return $this->check();
