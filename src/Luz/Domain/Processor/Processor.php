@@ -2,6 +2,7 @@
 
 namespace App\Luz\Domain\Processor;
 
+use App\Luz\Domain\Math\Median;
 use App\Luz\Domain\Reader\Reader;
 use App\Luz\Domain\Reader\ReaderCsv;
 use App\Luz\Domain\Reader\ReaderXml;
@@ -39,23 +40,9 @@ class Processor
 
     public function check()
     {
-        $customers = [];
-        
         // prepare clients data
-        foreach ($this->data as $row) {
-            if(!isset($customers[$row['client_id']])){
-                $customers[$row['client_id']] = [
-                    'months' => [],
-                    'median' => 0,
-                ];
-            }
-            $customers[$row['client_id']]['months'][$row['period']] = [
-                'reading' => $row['reading'],
-                'diff_prev_month' => 0,
-                'diff_prev_month_percent' => 0,
-            ];
-        }
-
+        $customers = $this->prepareCustomers();
+        
         foreach ($customers as &$customer) {
             foreach ($customer['months'] as $key => $month) {
 
@@ -72,15 +59,13 @@ class Processor
             }
 
             // calculate median
-            $cnt = 0;
-            $total = 0;
+            $numbers = [];
             foreach ($customer['months'] as $month) {
                 if($month['diff_prev_month_percent']>0 && $month['diff_prev_month_percent']<100) {
-                    $total += $month['diff_prev_month'];
-                    $cnt++;
+                    $numbers[] = $month['diff_prev_month'];
                 }
             }
-            $customer['median'] = floor($total / $cnt);
+            $customer['median'] = Median::calculate($numbers);
         }
         unset($customer);
 
@@ -102,6 +87,25 @@ class Processor
         }
 
         return $strangeReading;
+    }
+
+    public function prepareCustomers()
+    {
+        $customers = [];
+        foreach ($this->data as $row) {
+            if(!isset($customers[$row['client_id']])){
+                $customers[$row['client_id']] = [
+                    'months' => [],
+                    'median' => 0,
+                ];
+            }
+            $customers[$row['client_id']]['months'][$row['period']] = [
+                'reading' => $row['reading'],
+                'diff_prev_month' => 0,
+                'diff_prev_month_percent' => 0,
+            ];
+        }
+        return $customers;
     }
 
 }
